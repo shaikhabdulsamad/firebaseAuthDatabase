@@ -9,13 +9,13 @@ let signup = () => {
   loader.style.display = "block"
   text.style.display = "none"
 
-  // let redAlert = document.getElementById('redAlert')
-  // let greenAlert = document.getElementById('greenAlert')
+  let redAlert = document.getElementById('redAlert')
+  let greenAlert = document.getElementById('greenAlert')
 
   // btn.innerText = loader
 
   let data = {
-    name: name.value,
+    username: name.value,
     number: number.value,
     email: email.value,
     password: password.value
@@ -29,20 +29,24 @@ let signup = () => {
 
 
       firebase.database().ref(`user/${user.uid}`).set(data)
-        .then((res) => {
-          loader.style.display = "none"
-          text.style.display = "block"
-
-          // greenAlert.style.display = "block"
-
+      .then((res) => {
+        loader.style.display = "none"
+        text.style.display = "block"
+        greenAlert.innerHTML = "Logined successfully"
+        greenAlert.style.display = "block"
+          
+          
           name.value = ""
           number.value = ""
           email.value = ""
           password.value = ""
-
+          
+          
           setTimeout(() => {
             window.location = "login.html"
           }, 1000)
+
+         
         })
 
 
@@ -50,16 +54,13 @@ let signup = () => {
     .catch((error) => {
 
       var errorMessage = error.message;
-      console.log(errorMessage)
-    })
-    .then((res) => {
+      // console.log(errorMessage)
       loader.style.display = "none"
       text.style.display = "block"
-
-      // redAlert.style.display = "block"
-    
-    
+redAlert.innerHTML = errorMessage
+      redAlert.style.display = "block"
     })
+    
 
 
 }
@@ -73,8 +74,8 @@ let signin = () => {
   loader.style.display = "block"
   text.style.display = "none"
 
-  // let redAlert = document.getElementById('redAlert')
-  // let greenAlert = document.getElementById('greenAlert')
+  let redAlert = document.getElementById('redAlert')
+  let greenAlert = document.getElementById('greenAlert')
 
 
   firebase.auth().signInWithEmailAndPassword(email1.value, password1.value)
@@ -90,23 +91,26 @@ let signin = () => {
         .then((res) => {
           loader.style.display = "none"
           text.style.display = "block"
-          // greenAlert.style.display = "block"
+          greenAlert.innerHTML = "Logined successfully"
+          greenAlert.style.display = "block"
 
           email1.value = ""
           password1.value = ""
 
           setTimeout(() => {
-            window.location = "https://quiz-app-abdul-samad.netlify.app/"
-          }, 500)
+            window.location = "profile.html"
+            
+          }, 1000)
         })
     })
     .catch((error) => {
       var errorMessage = error.message;
-      console.log(errorMessage)
-    })
-    .then((res) => {
+      // console.log(errorMessage)
+
       loader.style.display = "none"
       text.style.display = "block"
-      // redAlert.style.display = "block"
+      redAlert.innerHTML = errorMessage
+      redAlert.style.display = "block"
     })
+   
 }
